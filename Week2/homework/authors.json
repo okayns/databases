@@ -1,0 +1,136 @@
+[
+  {
+    "author_no": "0001",
+    "author_name": "Michel Foucault",
+    "university": "Collège de France",
+    "date_of_birth": "1026-10-15",
+    "h_index": "289",
+    "gender": "m"
+  },
+  {
+    "author_no": "0002",
+    "author_name": "Graham Colditz",
+    "university": "Washington University in St Louis",
+    "date_of_birth": "1951-11-01",
+    "h_index": "282",
+    "gender": "m",
+    "friend": "0001"
+  },
+  {
+    "author_no": "0003",
+    "author_name": "Ronald C Kessler",
+    "university": "Harvard University",
+    "date_of_birth": "1947-04-26",
+    "h_index": "280",
+    "gender": "m",
+    "friend": "0002"
+  },
+  {
+    "author_no": "0004",
+    "author_name": "JoAnn E Manson",
+    "university": "Harvard Medical School",
+    "date_of_birth": "1953-02-01",
+    "h_index": "270",
+    "gender": "f",
+    "friend": "0003"
+  },
+  {
+    "author_no": "0005",
+    "author_name": "Sigmund Freud",
+    "university": "University of Vienna",
+    "date_of_birth": "1856-05-06",
+    "h_index": "269",
+    "gender": "m",
+    "friend": "0003"
+  },
+  {
+    "author_no": "0006",
+    "author_name": "Shizuo Akira",
+    "university": "Osaka University",
+    "date_of_birth": "1967-07-26",
+    "h_index": "269",
+    "gender": "m",
+    "friend": "0004"
+  },
+  {
+    "author_no": "0007",
+    "author_name": "Robert Langer",
+    "university": "MIT",
+    "date_of_birth": "1968-03-26",
+    "h_index": "263",
+    "gender": "m",
+    "friend": "0005"
+  },
+  {
+    "author_no": "0008",
+    "author_name": "Eric Lander",
+    "university": "MIT",
+    "date_of_birth": "1965-12-29",
+    "h_index": "263",
+    "gender": "m",
+    "friend": "0007"
+  },
+  {
+    "author_no": "0009",
+    "author_name": "Eugene Braunwald",
+    "university": "Harvard Medical School",
+    "date_of_birth": "1955-04-26",
+    "h_index": "261",
+    "gender": "m",
+    "friend": "0006"
+  },
+  {
+    "author_no": "0010",
+    "author_name": "Frank B Hu",
+    "university": "Harvard University",
+    "date_of_birth": "1975-04-26",
+    "h_index": "247",
+    "gender": "m",
+    "friend": "0009"
+  },
+  {
+    "author_no": "0011",
+    "author_name": "Frances ARNOLD",
+    "university": "California Institute of Technology",
+    "date_of_birth": "1965-04-26",
+    "h_index": "201",
+    "gender": "f",
+    "friend": "0010"
+  },
+  {
+    "author_no": "0012",
+    "author_name": "Frances ALLEN",
+    "university": "State University of New York",
+    "date_of_birth": "1968-11-16",
+    "h_index": "199",
+    "gender": "f",
+    "friend": "0011"
+  },
+  {
+    "author_no": "0013",
+    "author_name": "Françoise BARRE-SINOUSSI",
+    "university": "MIT",
+    "date_of_birth": "1970-04-26",
+    "h_index": "198",
+    "gender": "f",
+    "friend": "0011"
+  },
+  {
+    "author_no": "0014",
+    "author_name": "Reka ALBERT",
+    "university": "Harvard University",
+    "date_of_birth": "1975-06-26",
+    "h_index": "190",
+    "gender": "f",
+    "friend": "0013"
+  },
+  {
+    "author_no": "0015",
+    "author_name": "Elizabeth BLACKBURN",
+    "university": "California Institute of Technology",
+    "date_of_birth": "1965-04-06",
+    "h_index": "190",
+    "gender": "f",
+    "friend": "0013"
+  }
+]
