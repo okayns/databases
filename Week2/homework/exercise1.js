@@ -16,19 +16,19 @@ async function seedDatabase() {
 
   const CREATE_AUTHORS_TABLE = `
 		CREATE TABLE IF NOT EXISTS authors (
-			author_no INT PRIMARY KEY,
-			author_name VARCHAR(50),
-			university VARCHAR(50),
-			date_of_birth DATE,
-			h_index INT,
-			gender ENUM("m", "f"),
-			friend INT
+		  author_no INT PRIMARY KEY,
+		  author_name VARCHAR(50),
+		  university VARCHAR(50),
+		  date_of_birth DATE,
+		  h_index INT,
+		  gender ENUM("m", "f"),
+		  friend INT
 		);`;
 
   const ADD_FOREIGNKEY_TABLE = `
 		ALTER TABLE authors
-		ADD CONSTRAINT fk_fri FOREIGN KEY(
-		friend) REFERENCES authors(author_no);`;
+		  ADD CONSTRAINT fk_fri FOREIGN KEY(
+		  friend) REFERENCES authors(author_no);`;
 
   connection.connect();
 

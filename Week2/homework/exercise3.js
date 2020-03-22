@@ -12,16 +12,16 @@ const execQuery = util.promisify(connection.query.bind(connection));
 
 async function seedDatabase() {
   const GET_AUTHORS_FRIENDS_NAMES = `
-    SELECT first.author_name
-      AS 'AUTHOR NAME',
-      second.author_name AS 'FRIEND NAME'
-      FROM authors first, authors second
-      WHERE first.author_no = second.friend`;
+    SELECT second.author_name AS 'AUTHOR NAME',
+      first.author_name AS 'FRIEND NAME'
+      FROM authors AS first
+      RIGHT JOIN authors AS second
+      ON first.author_no = second.friend`;
 
   const GET_PAPERS_AND_AUTHORS = `
     SELECT author_name, paper_title
-    FROM researchers_papers, authors
-    WHERE researchers_papers.author_no = authors.author_no`;
+      FROM researchers_papers, authors
+      WHERE researchers_papers.author_no = authors.author_no`;
 
   connection.connect();
 
