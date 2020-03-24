@@ -2,71 +2,85 @@ const util = require("util");
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "hyfuser",
-  password: "hyfpassword",
-  database: "homeworkDB"
+	host: "localhost",
+	user: "hyfuser",
+	password: "hyfpassword",
+	database: "homeworkDB"
 });
 
-const execQuery = util.promisify(connection.query.bind(connection));
+const execQuery = util.promisify(connection.query.bind(
+	connection));
 
 async function seedDatabase() {
-  const NUMBER_OF_TOTAL_PAPERS_AND_AUTHORS = `
-		SELECT COUNT(paper_id) AS 'The Number of Total Research Papers',
-      COUNT(DISTINCT author_no) AS 'The Number of Total Authors'
-      FROM researchers_papers`;
+	const NUMBER_OF_TOTAL_PAPERS_AND_AUTHORS = `
+	  SELECT COUNT(DISTINCT(a.paper_id)) AS 'THE NUMBER OF TOTAL PAPERS',
+      COUNT(DISTINCT(author_no)) AS 'THE NUMBER OF TOTAL AUTHORS'
+      FROM researchers_papers AS A
+      LEFT JOIN author_paper_relation AS b
+      ON a.paper_id=b.paper_id
+      RIGHT JOIN authors AS c
+      ON b.author_id = c.author_no`;
 
-  const NUMBER_OF_TOTAL_PAPERS_BY_FEMALE_AUTHORS = `
-		SELECT COUNT(researchers_papers.paper_id)
-      AS 'The Number of Total Papers Published By Female Authors'
-      FROM researchers_papers
-      JOIN authors
-      ON researchers_papers.author_no = authors.author_no
-      WHERE authors.gender ='f'`;
+	const NUMBER_OF_TOTAL_PAPERS_BY_FEMALE_AUTHORS = `
+		SELECT COUNT(*) AS 'Sum of the research papers published by all female authors'
+      FROM researchers_papers AS A
+      LEFT JOIN author_paper_relation AS b
+      ON a.paper_id=b.paper_id
+      RIGHT JOIN authors AS c
+      ON b.author_id = c.author_no
+      WHERE c.gender = 'f'`;
 
-  const AVARAGE_H_INDEX_PER_UNIVERSITY = `
-      SELECT AVG(authors.h_index), university
+	const AVARAGE_H_INDEX_PER_UNIVERSITY = `
+    SELECT AVG(h_index), university
       FROM authors
       GROUP BY university`;
 
-  const SUM_RESEARCH_PAPERS_PER_UNIVERSITY = `
-    SELECT COUNT(researchers_papers.paper_id)
-      AS 'Sum of the research papers of the authors per university', authors.university
-      FROM researchers_papers
-      JOIN authors
-      ON researchers_papers.author_no = authors.author_no
-      GROUP BY authors.university`;
+	const SUM_RESEARCH_PAPERS_PER_UNIVERSITY = `
+    SELECT c.university AS 'UNIVERSITY',
+      COUNT(a.paper_id) AS 'Sum of the research papers'
+      FROM researchers_papers AS A
+      LEFT JOIN author_paper_relation AS b
+      ON a.paper_id=b.paper_id
+      RIGHT JOIN authors AS c
+      ON b.author_id = c.author_no
+      GROUP BY university`;
 
-  const MIN_AND_MAX_H_INDEX_PER_UNIVERSITY = `
+	const MIN_AND_MAX_H_INDEX_PER_UNIVERSITY = `
     SELECT MIN(h_index) AS 'MIN of h-index',
       MAX(h_index) AS 'MAX of h-index', university
       FROM authors
       GROUP BY university`;
 
-  connection.connect();
+	connection.connect();
 
-  try {
-    const results = {
-      totalPapersAndAuthors: execQuery(NUMBER_OF_TOTAL_PAPERS_AND_AUTHORS),
-      totalPapersByFemaleAuthors: execQuery(
-        NUMBER_OF_TOTAL_PAPERS_BY_FEMALE_AUTHORS
-      ),
-      averageHindexPerUniversity: execQuery(AVARAGE_H_INDEX_PER_UNIVERSITY),
-      totalPapersPerUniversity: execQuery(SUM_RESEARCH_PAPERS_PER_UNIVERSITY),
-      minAndMaxHindex: execQuery(MIN_AND_MAX_H_INDEX_PER_UNIVERSITY)
-    };
+	try {
+		const results = {
+			totalPapersAndAuthors: execQuery(
+				NUMBER_OF_TOTAL_PAPERS_AND_AUTHORS),
+			totalPapersByFemaleAuthors: execQuery(
+				NUMBER_OF_TOTAL_PAPERS_BY_FEMALE_AUTHORS
+			),
+			averageHindexPerUniversity: execQuery(
+				AVARAGE_H_INDEX_PER_UNIVERSITY),
+			totalPapersPerUniversity: execQuery(
+				SUM_RESEARCH_PAPERS_PER_UNIVERSITY),
+			minAndMaxHindex: execQuery(
+				MIN_AND_MAX_H_INDEX_PER_UNIVERSITY)
+		};
 
-    await Promise.all(
-      Object.keys(results).map(async key => {
-        console.log(`${key}:\n`, await results[key]);
-      })
-    );
-  } catch (error) {
-    console.error(error);
-    connection.end();
-  } finally {
-    connection.end();
-  }
+		await Promise.all(
+			Object.keys(results)
+			.map(async key => {
+				console.log(`${key}:\n`, await results[
+					key]);
+			})
+		);
+	} catch (error) {
+		console.error(error);
+		connection.end();
+	} finally {
+		connection.end();
+	}
 }
 
 seedDatabase();
