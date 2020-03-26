@@ -13,22 +13,21 @@ const execQuery = util.promisify(connection.query.bind(
 
 async function seedDatabase() {
 	const NUMBER_OF_TOTAL_PAPERS_AND_AUTHORS = `
-	  SELECT COUNT(DISTINCT(a.paper_id)) AS 'THE NUMBER OF TOTAL PAPERS',
-      COUNT(DISTINCT(author_no)) AS 'THE NUMBER OF TOTAL AUTHORS'
-      FROM researchers_papers AS A
-      LEFT JOIN author_paper_relation AS b
-      ON a.paper_id=b.paper_id
-      RIGHT JOIN authors AS c
-      ON b.author_id = c.author_no`;
+		SELECT a.paper_title AS 'PAPER TITLE',
+			COUNT(b.author_id) AS 'THE NUMBER OF TOTAL AUTHORS'
+			FROM researchers_papers AS a
+			LEFT JOIN author_paper_relation AS b
+			ON a.paper_id=b.paper_id 
+			GROUP BY a.paper_title`;
 
 	const NUMBER_OF_TOTAL_PAPERS_BY_FEMALE_AUTHORS = `
-		SELECT COUNT(*) AS 'Sum of the research papers published by all female authors'
-      FROM researchers_papers AS A
-      LEFT JOIN author_paper_relation AS b
-      ON a.paper_id=b.paper_id
-      RIGHT JOIN authors AS c
-      ON b.author_id = c.author_no
-      WHERE c.gender = 'f'`;
+		SELECT COUNT(*) AS 'The number of papers published by all female authors'
+			FROM researchers_papers AS a
+			LEFT JOIN author_paper_relation AS b
+			ON a.paper_id=b.paper_id
+			LEFT JOIN authors AS c
+			ON b.author_id=c.author_no
+			WHERE a.paper_id IS NOT NULL and c.gender='f'`;
 
 	const AVARAGE_H_INDEX_PER_UNIVERSITY = `
     SELECT AVG(h_index), university
