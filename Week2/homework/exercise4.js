@@ -17,17 +17,17 @@ async function seedDatabase() {
 			COUNT(b.author_id) AS 'THE NUMBER OF TOTAL AUTHORS'
 			FROM researchers_papers AS a
 			LEFT JOIN author_paper_relation AS b
-			ON a.paper_id=b.paper_id 
-			GROUP BY a.paper_title`;
+			ON a.paper_id=b.paper_id
+			GROUP BY a.paper_id`;
 
 	const NUMBER_OF_TOTAL_PAPERS_BY_FEMALE_AUTHORS = `
-		SELECT COUNT(*) AS 'The number of papers published by all female authors'
+		SELECT COUNT(a.paper_id) AS 'The number of papers published by all female authors'
 			FROM researchers_papers AS a
 			LEFT JOIN author_paper_relation AS b
 			ON a.paper_id=b.paper_id
 			LEFT JOIN authors AS c
 			ON b.author_id=c.author_no
-			WHERE a.paper_id IS NOT NULL and c.gender='f'`;
+			WHERE c.gender='f'`;
 
 	const AVARAGE_H_INDEX_PER_UNIVERSITY = `
     SELECT AVG(h_index), university
