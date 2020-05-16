@@ -1,0 +1,19 @@
+1-world.sql datas converted to .csv format using MySQL Terminal with following commands;
+  
+  a-select * into outfile 'city.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' from city;
+  b-select * into outfile 'country.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' from country;
+  c-select * into outfile 'countrylanguage.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' from countrylanguage;
+
+
+2-Converted files moved from 'C:\ProgramData\MySQL\MySQL Server 8.0\Data\world' to 'C:\data\db'
+
+
+3-There are two ways to import datas to MongoDB.I used both of them.
+  
+  3.1- Using MongoDBCompass is easiest way to import datas.
+  
+  3.2- Second Way is using mongoimport method. Following commands is used to import data to MongoDB;
+    
+    a-mongoimport --db world --collection city --file C:\data\db\city.csv --type csv --headerline
+    b-mongoimport --db world --collection country --file C:\data\db\country.csv --type csv --headerline
+    c-mongoimport --db world --collection countrylanguage --file C:\data\db\countrylanguage.csv --type csv --headerline

@@ -1,0 +1,81 @@
++-----------+---------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+| member_id | member_name   | member_address | dinner_id | dinner_date | venue_code | venue_description | food_code | food_description |
++-----------+---------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+|         1 | Amit          | 325 Max park   | D00001001 | 2020-03-15  | B01        | Grand Ball Room   | C1, C2    | Curry, Cake      |
+|         2 | Ben           | 24 Hudson lane | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | S1, C2    | Soup, Cake       |
+|         3 | Cristina      | 516 6th Ave    | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | S1, C2    | Soup, Cake       |
+|         4 | Dan           | 89 John St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1, T1, M1| Pie, Tea, Mousse |
+|         5 | Ema           | 91 Pixar St    | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1, T1, M1| Pie, Tea, Mousse |
+|         6 | Fatima        | 56 8th Ave     | D00001004 | 2020-03-20  | B04        | Mama's Kitchen    | F1, M1    | Falafal, Mousse  |
+|         7 | Gabor         | 54 Vivaldi St  | D00001005 | 2020-02-20  | B05        | Hungry Hungary    | G1, P2    | Goulash, Pasca   |
+|         8 | Hema          | 9 Peter St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1, T1, M1| Pie, Tea, Mousse |
++-----------+---------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+
+
+Q.1- How can you convert the table into 1NF ?
+A.1- It should only have single(atomic) valued attributes/columns. In food_code and food_description columns there are multiple values.
+We have simplify them. Like above.
+
+
++----------+-----------+-------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+| index_no | member_id | member_name | member_address | dinner_id | dinner_date | venue_code | venue_description | food_code | food_description |
++----------+-----------+-------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+|        1 |         1 | Amit        | 325 Max park   | D00001001 | 2020-03-15  | B01        | Grand Ball Room   | C1        | Curry            |
+|        2 |         1 | Amit        | 325 Max park   | D00001001 | 2020-03-15  | B01        | Grand Ball Room   | C2        | Cake             |
+|        3 |         2 | Ben         | 24 Hudson lane | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | S1        | Soup             |
+|        4 |         2 | Ben         | 24 Hudson lane | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | C2        | Cake             |
+|        5 |         3 | Cristina    | 516 6th Ave    | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | S1        | Soup             |
+|        6 |         3 | Cristina    | 516 6th Ave    | D00001002 | 2020-03-15  | B02        | Zoku Roof Top     | C2        | Cake             |
+|        7 |         4 | Dan         | 89 John St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1        | Pie              |
+|        8 |         4 | Dan         | 89 John St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | T1        | Tea              |
+|        9 |         4 | Dan         | 89 John St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | M1        | Mousse           |
+|       10 |         5 | Ema         | 91 Pixar St    | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1        | Pie              |
+|       11 |         5 | Ema         | 91 Pixar St    | D00001003 | 2020-03-20  | B03        | Goat Farm         | T1        | Tea              |
+|       12 |         5 | Ema         | 91 Pixar St    | D00001003 | 2020-03-20  | B03        | Goat Farm         | M1        | Mousse           |
+|       13 |         6 | Fatima      | 56 8th Ave     | D00001004 | 2020-03-20  | B04        | Mama's Kitchen    | F1        | Falafal          |
+|       14 |         6 | Fatima      | 56 8th Ave     | D00001004 | 2020-03-20  | B04        | Mama's Kitchen    | M1        | Mousse           |
+|       15 |         7 | Gabor       | 54 Vivaldi St  | D00001005 | 2020-03-20  | B05        | Hungry Hungary    | G1        | Goulash          |
+|       16 |         7 | Gabor       | 54 Vivaldi St  | D00001005 | 2020-03-20  | B05        | Hungry Hungary    | P2        | Pasca            |
+|       17 |         8 | Hema        | 9 Peter St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | P1        | Pie              |
+|       18 |         8 | Hema        | 9 Peter St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | T1        | Tea              |
+|       19 |         8 | Hema        | 9 Peter St     | D00001003 | 2020-03-20  | B03        | Goat Farm         | M1        | Mousse           |
++----------+-----------+-------------+----------------+-----------+-------------+------------+-------------------+-----------+------------------+
+
+
+Q.2- What are the super, candidate, primary keys ?
+A.2- SK1 (member_name, member_address, dinner_id, food_code)
+    SK2 (member_id, member_name)
+
+    CK1 from SK1 (member_name, member_address)
+    CK2 from SK1 (member_name, food_code)
+    CK3 from SK2 (member_id)
+
+In my case i created an index_no that has uniqely identifies the data(it is a primary key of the table.)
+
+
+Q.3: What are the potential relationships between different possible tables ?
+A.3: We can create 5 separated tables
+    -MEMBERS_TABLE
+      member_id | member_name   | member_address
+    -DINNERS_TABLE
+      dinner_id | dinner_date 
+    -VENUES_TABLE
+      venue_code | venue_description
+    -FOODS_TABLE
+      food_code | food_description | venue_code | dinner_id
+    -ATTENDS_TABLE
+      member_id | dinner_id | food_code | venue_code
+
+    There is many-to-many relations between tables.
+
+Q.4: How can you develop the set of 2NF tables?
+A.4: 2nf rule ====>No non-prime attribute should be functionally dependent on any proper subset of a candidate key.
+    1. -MEMBERS_TABLE (member_id, member_name, member_address)
+    2. -VENUES_TABLE (venue_code, venue_description, dinner_id, dinner_date)
+    3. -FOODS_TABLE (food_codes, food_description) 
+
+Q.5: How can you develop the set of 3NF tables?
+A.5: For a table to be in the third normal form, 
+    1.) It should be in the Second Normal form.
+    2.) And no transitive dependency
+    So tables should not have partial dependency dinner_date and venue_description and food_description columns should be sepearated as a different tables.
