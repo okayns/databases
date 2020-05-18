@@ -1,15 +1,15 @@
-const mysql = require("mysql");
-const util = require("util");
-const authors = require("./authors");
-const papers = require("./papers");
-const necessaryTableData = require("./necessaryTableData");
-const collaboratorData = require("./collabrator");
+const mysql = require('mysql');
+const util = require('util');
+const authors = require('./authors');
+const papers = require('./papers');
+const authorPaperData = require('./authorPaperData');
+const collaboratorData = require('./collabrator');
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "hyfuser",
-  password: "hyfpassword",
-  database: "week2DB",
+  host: 'localhost',
+  user: 'hyfuser',
+  password: 'hyfpassword',
+  database: 'week2DB',
 });
 
 const execQuery = util.promisify(connection.query.bind(connection));
@@ -23,8 +23,8 @@ async function seedDatabase() {
       publish_date DATE
     );`;
 
-  const CREATE_NecessaryTable = `
-  CREATE TABLE IF NOT EXISTS Necessary_Table (
+  const CREATE_Author_and_Paper_TABLE = `
+  CREATE TABLE IF NOT EXISTS Author_and_Paper (
     author_id INT,
     paper_id INT,
     CONSTRAINT FK_Author FOREIGN KEY(author_id) REFERENCES Authors(author_no),
@@ -40,26 +40,26 @@ async function seedDatabase() {
 
   try {
     await execQuery(CREATE_Research_Papers_TABLE);
-    await execQuery(CREATE_NecessaryTable);
+    await execQuery(CREATE_Author_and_Paper_TABLE);
 
     authors.forEach(async (author) => {
-      await execQuery("INSERT INTO Authors SET ?", author);
+      await execQuery('INSERT INTO Authors SET ?', author);
     });
 
     papers.forEach(async (paper) => {
-      await execQuery("INSERT INTO Research_Papers SET ?", paper);
+      await execQuery('INSERT INTO Research_Papers SET ?', paper);
     });
 
-    necessaryTableData.forEach(async (data) => {
-      await execQuery("INSERT INTO Necessary_Table SET ?", data);
+    authorPaperData.forEach(async (data) => {
+      await execQuery('INSERT INTO Author_and_Paper SET ?', data);
     });
 
-    const setCollabratorColumn = await collaboratorData.map((value) =>
+    const setCollaboratorColumn = await collaboratorData.map((value) =>
       execQuery(
-        `UPDATE Authors SET Collaborator = ${rng()} WHERE author_no = ${value}`
-      )
+        `UPDATE Authors SET Collaborator = ${rng()} WHERE author_no = ${value}`,
+      ),
     );
-    await Promise.all[setCollabratorColumn];
+    await Promise.all[setCollaboratorColumn];
   } catch (error) {
     console.error(error);
     connection.end();

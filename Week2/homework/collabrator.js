@@ -1,4 +1,4 @@
-const Collabrator = [
+const collaborator = [
   115,
   114,
   113,
@@ -16,4 +16,4 @@ const Collabrator = [
   101,
 ];
 
-module.exports = Collabrator;
+module.exports = collaborator;

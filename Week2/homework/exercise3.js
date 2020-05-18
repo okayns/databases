@@ -24,7 +24,7 @@ ON a1.Collaborator = a2.author_no;
   const authorPaperTitle = `
 SELECT a.author_name AS Author_Name, r.paper_title AS Paper_Title
 FROM Authors AS a
-LEFT JOIN Necessary_Table AS n
+LEFT JOIN Author_and_Paper AS n
 ON a.author_no = n.author_id
 LEFT JOIN Research_Papers AS r
 ON n.paper_id = r.paper_id

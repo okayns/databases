@@ -1,11 +1,11 @@
-const util = require("util");
-const mysql = require("mysql");
+const util = require('util');
+const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "hyfuser",
-  password: "hyfpassword",
-  database: "week2DB",
+  host: 'localhost',
+  user: 'hyfuser',
+  password: 'hyfpassword',
+  database: 'week2DB',
 });
 
 const execQuery = util.promisify(connection.query.bind(connection));
@@ -13,14 +13,14 @@ const execQuery = util.promisify(connection.query.bind(connection));
 async function seedDatabase() {
   const query1 = `
     SELECT rp.paper_title, COUNT(DISTINCT n.author_id) AS 'Authors'
-    FROM  Necessary_Table n 
+    FROM  Author_and_Paper n 
     RIGHT JOIN Research_Papers rp
     ON rp.paper_id = n.paper_id
 	GROUP BY rp.paper_id`;
 
   const query2 = `
     SELECT a.gender , COUNT(n.paper_id) 
-    FROM Necessary_Table n 
+    FROM Author_and_Paper n 
     INNER JOIN Authors a 
     on a.author_no = n.author_id 
     WHERE a.gender ='f';
@@ -33,7 +33,7 @@ async function seedDatabase() {
     COUNT(DISTINCT rp.paper_title) 
     AS 'Sum of the Research Papers'
     FROM Authors a 
-    LEFT JOIN Necessary_Table n
+    LEFT JOIN Author_and_Paper n
     ON (a.author_no = n.author_id)
     LEFT JOIN Research_Papers rp
     ON (n.paper_id = rp.paper_id) 
@@ -48,13 +48,13 @@ async function seedDatabase() {
 
   try {
     console.log(await execQuery(query1));
-    console.log("/-/-/-/-/-/-/-/");
+    console.log('/-/-/-/-/-/-/-/');
     console.log(await execQuery(query2));
-    console.log("/-/-/-/-/-/-/-/");
+    console.log('/-/-/-/-/-/-/-/');
     console.log(await execQuery(query3));
-    console.log("/-/-/-/-/-/-/-/");
+    console.log('/-/-/-/-/-/-/-/');
     console.log(await execQuery(query4));
-    console.log("/-/-/-/-/-/-/-/");
+    console.log('/-/-/-/-/-/-/-/');
     console.log(await execQuery(query5));
   } catch (error) {
     console.error(error);

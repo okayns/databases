@@ -1,4 +1,4 @@
-const Authors = [
+const authors = [
   {
     author_no: 101,
     author_name: "author_1",
@@ -121,4 +121,4 @@ const Authors = [
   },
 ];
 
-module.exports = Authors;
+module.exports = authors;

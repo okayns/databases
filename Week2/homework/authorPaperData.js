@@ -1,4 +1,4 @@
-const Datas = [
+const authorPaperData = [
   {
     author_id: 101,
     paper_id: 30,
@@ -121,4 +121,4 @@ const Datas = [
   },
 ];
 
-module.exports = Datas;
+module.exports = authorPaperData;
